@@ -1459,3 +1459,23 @@ class RemoteDisconnected(ConnectionResetError, BadStatusLine):
 
 # for backwards compatibility
 error = HTTPException
+
+
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--output', '-o', metavar='OUTPUT',
+                        help='Specify output filename'
+                             '[default: STDOUT]')
+    parser.add_argument('url', action='store',
+                        type=str,
+                        nargs='?',
+                        help='URL to grab')
+    args = parser.parse_args()
+
+    import urllib.request
+    if args.output:
+        urllib.request.urlretrieve(args.url, args.output)
+    else:
+        print(urllib.request.urlopen(args.url).read())
